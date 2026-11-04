@@ -1,0 +1,141 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  email           String   @unique
+  role            String   // ADMIN, DG_SUPERVISOR, SALES_MANAGER, SALES_REP, CASHIER, STOCK_MANAGER, ACCOUNTANT
+  depotAssignment String
+  isActive        Boolean  @default(true)
+  lastLogin       DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Product {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  sku            String   @unique
+  barcode        String   @unique
+  designation    String
+  family         String
+  location       String
+  unitPriceHT    Float
+  tvaRate        Float    @default(18)
+  stockPhysical  Int      @default(0)
+  stockReserved  Int      @default(0)
+  minThreshold   Int      @default(2)
+  alertThreshold Int      @default(5)
+  costPriceCMUP  Float
+  packageUnit    String?
+  supplier       String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Customer {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  companyName String
+  contactName String
+  phone       String
+  email       String?
+  address     String?
+  nif         String?
+  rccm        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Proforma {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  reference     String   @unique
+  customerId    String
+  customerName  String
+  customerPhone String
+  salesRepId    String
+  salesRepName  String
+  items         Json
+  totalHT       Float
+  discountTotal Float    @default(0)
+  totalTVA      Float
+  totalTTC      Float
+  status        String   @default("PENDING_PAYMENT")
+  notes         String?
+  validUntil    DateTime
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Invoice {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  reference      String   @unique
+  proformaId     String?
+  proformaRef    String?
+  cashierId      String
+  cashierName    String
+  terminalId     String
+  customerId     String
+  customerName   String
+  items          Json
+  paymentMethod  String
+  amountReceived Float
+  changeReturned Float    @default(0)
+  totalHT        Float
+  discountTotal  Float    @default(0)
+  totalTVA       Float
+  totalTTC       Float
+  paymentRef     String?
+  createdAt      DateTime @default(now())
+}
+
+model StockMovement {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId    String
+  sku          String
+  designation  String
+  movementType String
+  documentRef  String
+  quantity     Int
+  stockBefore  Int
+  stockAfter   Int
+  unitValue    Float
+  operatorId   String
+  operatorName String
+  location     String?
+  notes        String?
+  createdAt    DateTime @default(now())
+}
+
+model OutputSlip {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  reference    String   @unique
+  invoiceId    String
+  invoiceRef   String
+  customerName String
+  status       String   @default("EN_ATTENTE")
+  items        Json
+  preparedBy   String?
+  validatedBy  String?
+  createdAt    DateTime @default(now())
+  validatedAt  DateTime?
+}
+
+model SupplierReception {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  reference     String   @unique
+  supplierName  String
+  poNumber      String?
+  receptionDate DateTime
+  items         Json
+  totalHT       Float
+  receivedBy    String
+  notes         String?
+  createdAt     DateTime @default(now())
+}
+
