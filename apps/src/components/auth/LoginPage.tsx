@@ -12,7 +12,6 @@ export const LoginPage: React.FC = () => {
   const [password, setPassword] = useState('etam2025');
   const [selectedDepot, setSelectedDepot] = useState('Station POS-01 (Caisse Principale)');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const isDemoMode = process.env.NODE_ENV !== 'production';
 
   const handleManualLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -188,7 +187,7 @@ export const LoginPage: React.FC = () => {
               </div>
 
               {/* TOP DIRECT 1-CLICK ROLE SELECTOR PILLS */}
-              {isDemoMode && <div className="bg-[#e6f6ff] border border-[#bfcaba] p-2.5 rounded mb-3.5">
+              <div className="bg-[#e6f6ff] border border-[#bfcaba] p-2.5 rounded mb-3.5">
                 <div className="text-[10px] uppercase font-bold text-[#0d631b] mb-1.5 flex items-center justify-between">
                   <span>⚡ Accès Rapide Direct (Cliquez pour tester) :</span>
                   <span className="text-[9px] text-[#707a6c]">7 Rôles Métier</span>
@@ -207,7 +206,7 @@ export const LoginPage: React.FC = () => {
                     </button>
                   ))}
                 </div>
-              </div>}
+              </div>
 
               {errorMessage && (
                 <div className="bg-[#ffdad6] text-[#ba1a1a] p-2.5 rounded text-xs font-semibold mb-3 border border-[#ef9a9a]">
@@ -285,7 +284,7 @@ export const LoginPage: React.FC = () => {
         </div>
 
         {/* DETAILED 7 TEST ACCESS CARDS GRID */}
-        {isDemoMode && <div className="bg-white border border-[#bfcaba] rounded-lg p-5 shadow-xs">
+        <div className="bg-white border border-[#bfcaba] rounded-lg p-5 shadow-xs">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#bfcaba] pb-2.5 mb-3.5">
             <div>
               <h3 className="font-bold text-xs uppercase tracking-wider text-[#071e27] flex items-center gap-1.5">
@@ -349,7 +348,7 @@ export const LoginPage: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>}
+        </div>
       </main>
 
       {/* Footer */}

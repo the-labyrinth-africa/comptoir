@@ -136,7 +136,6 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   loginAsRole: (role: UserRole) => {
-    if (process.env.NODE_ENV === 'production') return;
     const user = get().users.find((u) => u.role === role && u.isActive);
     if (user) {
       const defaultView = ROLE_DEFAULT_VIEW[user.role] || 'CAISSE';
