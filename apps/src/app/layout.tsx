@@ -6,10 +6,6 @@ export const metadata: Metadata = {
   description:
     'Application unifiée de gestion commerciale, stocks, proformas, caisse et comptabilité pour ETAM S.A.R.L',
   manifest: '/manifest.json',
-  icons: {
-    icon: '/images/etam.jpg',
-    apple: '/images/etam.jpg',
-  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
